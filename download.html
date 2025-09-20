@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Y Civilization - Download Hub</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&display=swap');
+    
+    :root {
+      --primary: #42A5F5;
+      --primary-dark: #0D47A1;
+      --accent: #82b1ff;
+      --text: #f0f0f0;
+      --bg-dark: #0b0d17;
+      --bg-darker: #000;
+      --warning: #ff8a80;
+      --success: #69f0ae;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Exo 2', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.7;
+      color: var(--text);
+      background: radial-gradient(ellipse at bottom, var(--bg-dark) 0%, var(--bg-darker) 100%);
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+    
+    /* Cosmic background elements */
+    .cosmic-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .star {
+      position: absolute;
+      background-color: white;
+      border-radius: 50%;
+      animation: twinkle linear infinite;
+    }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+    
+    .nebula {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.15;
+      animation: pulse 30s infinite alternate;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 0.1; transform: scale(1); }
+      100% { opacity: 0.2; transform: scale(1.2); }
+    }
+    
+    header {
+      background: linear-gradient(135deg, rgba(13,71,161,0.8), rgba(66,165,245,0.8)), 
+                  url('https://images.unsplash.com/photo-1465101162946-4377e57745c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2078&q=80');
+      color: #fff;
+      padding: 120px 20px;
+      text-align: center;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.7) 100%);
+      z-index: 1;
+    }
+    
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 1;
+    }
+    
+    .planet {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #42A5F5, #0D47A1);
+      box-shadow: 0 0 60px rgba(66, 165, 245, 0.6);
+      right: 15%;
+      top: 30%;
+      z-index: 1;
+      animation: float 20s infinite alternate ease-in-out;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-30px) rotate(5deg); }
+    }
+    
+    header h1, header p {
+      position: relative;
+      z-index: 2;
+    }
+    
+    header h1 {
+      font-size: 3.5em;
+      margin-bottom: 15px;
+      text-shadow: 0 0 25px var(--primary);
+      animation: glow 3s infinite alternate;
+    }
+    
+    header p {
+      font-size: 1.4em;
+    }
+    
+    @keyframes glow {
+      from { text-shadow: 0 0 10px var(--primary); }
+      to { text-shadow: 0 0 30px var(--accent), 0 0 60px var(--primary); }
+    }
+    
+    nav {
+      background: rgba(21,101,192,0.9);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(66,165,245,0.3);
+    }
+    
+    nav a {
+      color: #fff;
+      padding: 14px 22px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    nav a:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 0 20px var(--primary);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .disclaimer {
+      font-size: 1em;
+      color: var(--warning);
+      text-align: center;
+      margin: 30px auto;
+      max-width: 900px;
+      padding: 15px;
+      background: rgba(183,28,28,0.2);
+      border: 1px solid rgba(255,205,210,0.4);
+      border-radius: 10px;
+      box-shadow: 0 0 25px rgba(255,82,82,0.6);
+    }
+    
+    /* Download Hub Styles */
+    .downloads-container {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .category-section {
+      margin-bottom: 50px;
+    }
+    
+    .category-title {
+      color: var(--accent);
+      font-size: 2em;
+      margin-bottom: 25px;
+      text-shadow: 0 0 15px rgba(130,177,255,0.8);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--primary);
+    }
+    
+    .downloads-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+    }
+    
+    .download-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 25px;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(66, 165, 245, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .download-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    
+    .download-card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .download-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(66, 165, 245, 0.4);
+    }
+    
+    .download-card h3 {
+      color: var(--accent);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .download-card p {
+      color: rgba(240, 240, 240, 0.8);
+      margin-bottom: 20px;
+      font-size: 0.95em;
+    }
+    
+    .download-meta {
+      display: flex;
+      justify-content: space-between;
+      color: rgba(240, 240, 240, 0.6);
+      font-size: 0.85em;
+      margin-bottom: 20px;
+      border-top: 1px solid rgba(66, 165, 245, 0.2);
+      padding-top: 15px;
+    }
+    
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      width: 100%;
+      text-align: center;
+    }
+    
+    .download-btn:hover {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      box-shadow: 0 0 15px rgba(66, 165, 245, 0.6);
+      transform: translateY(-2px);
+    }
+    
+    .search-box {
+      display: flex;
+      margin-bottom: 40px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .search-input {
+      flex: 1;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(66, 165, 245, 0.3);
+      border-right: none;
+      border-radius: 8px 0 0 8px;
+      color: var(--text);
+      font-family: 'Exo 2', sans-serif;
+    }
+    
+    .search-btn {
+      padding: 0 20px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border: none;
+      border-radius: 0 8px 8px 0;
+      color: white;
+      cursor: pointer;
+    }
+    
+    footer {
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), 
+                  url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center;
+      background-size: cover;
+      background-attachment: fixed;
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 1em;
+      box-shadow: 0 -4px 30px rgba(0,0,0,0.6);
+      position: relative;
+      margin-top: 60px;
+    }
+    
+    footer::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.9) 100%);
+    }
+    
+    footer p { 
+      position: relative; 
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.5em;
+      }
+      
+      header p {
+        font-size: 1.2em;
+      }
+      
+      .downloads-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .planet {
+        width: 150px;
+        height: 150px;
+        right: 5%;
+        top: 25%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Cosmic background elements -->
+  <div class="cosmic-bg" id="cosmicBg"></div>
+  
+  <header>
+    <div class="planet"></div>
+    <h1>📥 Y Civilization Download Hub</h1>
+    <p>Access rules, notices, and official documents</p>
+  </header>
+
+  <nav>
+    <a href="#rules">📋 Rules</a>
+    <a href="#notices">📢 Notices</a>
+    <a href="#legal">⚖️ Legal Documents</a>
+    <a href="#guides">📚 Guides</a>
+     <a href="index"> Home</a>
+    <a href="Contact">Contact us</a>
+      </nav>
+
+  <div class="container">
+    <div class="disclaimer">
+      ⚠️ Disclaimer: These documents are part of a visionary concept. All content is fictional and for demonstration purposes only.
+    </div>
+
+    <div class="downloads-container">
+      <!-- Search Box -->
+      <div class="search-box">
+        <input type="text" class="search-input" placeholder="Search documents...">
+        <button class="search-btn">Search</button>
+      </div>
+
+      <!-- Rules Section -->
+      <div class="category-section" id="rules">
+        <h2 class="category-title">📋 Official Rules & Regulations</h2>
+        <div class="downloads-grid">
+          <div class="download-card">
+            <h3>YLegal Framework</h3>
+            <p>Complete legal framework for the Y Civilization justice system</p>
+            <div class="download-meta">
+              <span>PDF, 2.4 MB</span>
+              <span>v3.2.1</span>
+            </div>
+            <a href="#" class="download-btn">Download</a>
+          </div>
+          
+          <div class="download-card">
+            <h3>Digital Ethics Charter</h3>
+            <p>Rules governing digital behavior in YDigital ecosystem</p>
+            <div class="download-meta">
+              <span>PDF, 1.7 MB</span>
+              <span>v2.0.4</span>
+            </div>
+            <a href="#" class="download-btn">Download</a>
+          </div>
+          
+          <div class="download-card">
+            <h3>IWC Procedures</h3>
+            <p>International World Court procedures and protocols</p>
+            <div class="download-meta">
+              <span>PDF, 3.1 MB</span>
+              <span>v1.5.2</span>
+            </div>
+            <a href="#" class="download-btn">Download</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notices Section -->
+      <div class="category-section" id="notices">
+        <h2 class="category-title">📢 Official Notices & Announcements</h2>
+        <div class="downloads-grid">
+          <div class="download-card">
+            <h3>YUniverse ALL</h3>
+            <p>Y all PDF you must download for full experience.</p>
+            <div class="download-meta">
+              <span>PDF, 0.8 MB</span>
+              <span>v1.0</span>
+            </div>
+            <a href="y.pdf" class="download-btn">Download</a>
+          </div>
+          
+          <div class="download-card">
+            <h3>Monthly Bulletin</h3>
+            <p>Latest updates and announcements from Y leadership</p>
+            <div class="download-meta">
+              <span>PDF, 1.2 MB</span>
+              <span>June 2023</span>
+            </div>
+            <a href="#" class="download-btn">Download</a>
+          </div>
+          
+          <div class="download-card">
+            <h3>Technology Roadmap</h3>
+            <p>YDigital development timeline and upcoming features</p>
+            <div class="download-meta">
+              <span>PDF, 2.5 MB</span>
+              <span>2023-2025</span>
+            </div>
+            <a href="#" class="download-btn">Download</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Legal Documents Section -->
+      <div class="category-section" id="legal">
+        <h2 class="category-title">⚖️ Legal Documents & Frameworks</h2>
+        <div class="downloads-grid">
+          <div class="download-card">
+            <h3>Constitution of Y</h3>
+            <p>Founding document of the Y Civilization</p>
+            <div class="download-meta">
+              <span>PDF, 4.2 MB</span>
+              <span>v1.0</span>
+            </div>
+            <a href="#" class="download-btn">Download</a>
+          </div>
+          
+          <div class="download-card">
+            <h3>Human Rights Charter</h3>
+            <p>Comprehensive rights and freedoms in Y Civilization</p>
+            <div class="download-meta">
+              <span>PDF, 1.9 MB</span>
+              <span>v2.3</span>
+            </div>
+            <a href="#" class="download-btn">Download</a>
+          </div>
+          
+          <div class="download-card">
+            <h3>Digital Privacy Act</h3>
+            <p>Laws governing data privacy in YDigital ecosystem</p>
+            <div class="download-meta">
+              <span>PDF, 2.7 MB</span>
+              <span>v1.4.5</span>
+            </div>
+            <a href="#" class="download-btn">Download</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guides Section -->
+      <div class="category-section" id="guides">
+        <h2 class="category-title">📚 Guides & Manuals</h2>
+        <div class="downloads-grid">
+          <div class="download-card">
+            <h3>YLegal User Guide</h3>
+            <p>How to navigate and use the YLegal justice system</p>
+            <div class="download-meta">
+              <span>PDF, 3.5 MB</span>
+              <span>v2.1</span>
+            </div>
+            <a href="#" class="download-btn">Download</a>
+          </div>
+          
+          <div class="download-card">
+            <h3>YDigital Handbook</h3>
+            <p>Complete guide to YDigital platforms and services</p>
+            <div class="download-meta">
+              <span>PDF, 5.2 MB</span>
+              <span>v3.0</span>
+            </div>
+            <a href="#" class="download-btn">Download</a>
+          </div>
+          
+          <div class="download-card">
+            <h3>Citizen Onboarding</h3>
+            <p>Guide for new members of Y Civilization</p>
+            <div class="download-meta">
+              <span>PDF, 2.8 MB</span>
+              <span>v1.7</span>
+            </div>
+            <a href="#" class="download-btn">Download</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="disclaimer">
+      ⚠️ Disclaimer: The information presented reflects a personal vision and imaginative projection of future goals. Its realization may evolve or differ over time. This content is conceptual and inspirational only.
+    </div>
+  </div>
+
+  <footer>
+        <p>© 2023 Y Civilization Project. All rights reserved. | A Visionary Blueprint by @mnmyounus</p>
+  
+  </footer>
+
+  <script>
+    // Create cosmic background with stars and nebulae
+    document.addEventListener('DOMContentLoaded', function() {
+      const cosmicBg = document.getElementById('cosmicBg');
+      
+      // Create stars
+      for (let i = 0; i < 150; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        
+        const size = Math.random() * 3;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        
+        star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        
+        cosmicBg.appendChild(star);
+      }
+      
+      // Create nebulae
+      for (let i = 0; i < 5; i++) {
+        const nebula = document.createElement('div');
+        nebula.classList.add('nebula');
+        
+        const size = Math.random() * 500 + 200;
+        nebula.style.width = `${size}px`;
+        nebula.style.height = `${size}px`;
+        
+        nebula.style.left = `${Math.random() * 80}%`;
+        nebula.style.top = `${Math.random() * 80}%`;
+        
+        const hue = Math.random() * 360;
+        nebula.style.backgroundColor = `hsla(${hue}, 70%, 50%, 0.1)`;
+        
+        nebula.style.animationDuration = `${Math.random() * 20 + 20}s`;
+        
+        cosmicBg.appendChild(nebula);
+      }
+      
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('nav a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        });
+      });
+      
+      // Simple search functionality
+      const searchInput = document.querySelector('.search-input');
+      const searchBtn = document.querySelector('.search-btn');
+      const downloadCards = document.querySelectorAll('.download-card');
+      
+      searchBtn.addEventListener('click', function() {
+        const searchTerm = searchInput.value.toLowerCase();
+        
+        downloadCards.forEach(card => {
+          const title = card.querySelector('h3').textContent.toLowerCase();
+          const description = card.querySelector('p').textContent.toLowerCase();
+          
+          if (title.includes(searchTerm) || description.includes(searchTerm)) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+      
+      // Clear search when input is cleared
+      searchInput.addEventListener('input', function() {
+        if (this.value === '') {
+          downloadCards.forEach(card => {
+            card.style.display = 'block';
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

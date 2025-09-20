@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Y: The Next Human Civilization</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&display=swap');
+    
+    :root {
+      --primary: #42A5F5;
+      --primary-dark: #0D47A1;
+      --accent: #82b1ff;
+      --text: #f0f0f0;
+      --bg-dark: #0b0d17;
+      --bg-darker: #000;
+      --warning: #ff8a80;
+      --success: #69f0ae;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Exo 2', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.7;
+      color: var(--text);
+      background: radial-gradient(ellipse at bottom, var(--bg-dark) 0%, var(--bg-darker) 100%);
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+    
+    /* Cosmic background elements */
+    .cosmic-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .star {
+      position: absolute;
+      background-color: white;
+      border-radius: 50%;
+      animation: twinkle linear infinite;
+    }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+    
+    .nebula {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.15;
+      animation: pulse 30s infinite alternate;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 0.1; transform: scale(1); }
+      100% { opacity: 0.2; transform: scale(1.2); }
+    }
+    
+    .comet {
+      position: absolute;
+      width: 4px;
+      height: 20px;
+      background: linear-gradient(to right, transparent, var(--accent), transparent);
+      border-radius: 50%;
+      filter: blur(1px);
+      animation: cometFly 15s linear infinite;
+      opacity: 0;
+    }
+    
+    @keyframes cometFly {
+      0% {
+        transform: rotate(250deg) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      20% {
+        transform: rotate(250deg) translateX(-100vh);
+        opacity: 0;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+    
+    header {
+      background: linear-gradient(135deg, rgba(13,71,161,0.8), rgba(66,165,245,0.8)), 
+                  url('https://images.unsplash.com/photo-1465101162946-4377e57745c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2078&q=80');
+      color: #fff;
+      padding: 160px 20px;
+      text-align: center;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.7) 100%);
+      z-index: 1;
+    }
+    
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 1;
+    }
+    
+    .planet {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #42A5F5, #0D47A1);
+      box-shadow: 0 0 60px rgba(66, 165, 245, 0.6);
+      right: 10%;
+      top: 20%;
+      z-index: 1;
+      animation: float 20s infinite alternate ease-in-out;
+    }
+    
+    .planet::after {
+      content: "";
+      position: absolute;
+      top: 20%;
+      left: 10%;
+      width: 60px;
+      height: 120px;
+      background: rgba(13, 71, 161, 0.6);
+      border-radius: 40%;
+      transform: rotate(-20deg);
+    }
+    
+    .satellite {
+      position: absolute;
+      width: 40px;
+      height: 15px;
+      background: var(--accent);
+      border-radius: 10px;
+      box-shadow: 0 0 10px var(--primary);
+      z-index: 2;
+      animation: orbit 15s linear infinite;
+    }
+    
+    @keyframes orbit {
+      0% {
+        transform: rotate(0deg) translateX(200px) rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg) translateX(200px) rotate(-360deg);
+      }
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-30px) rotate(5deg); }
+    }
+    
+    header h1, header p {
+      position: relative;
+      z-index: 2;
+    }
+    
+    header h1 {
+      font-size: 4em;
+      margin-bottom: 20px;
+      text-shadow: 0 0 25px var(--primary);
+      animation: glow 3s infinite alternate;
+      letter-spacing: 2px;
+      font-weight: 700;
+    }
+    
+    header p {
+      font-size: 1.6em;
+      max-width: 800px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+    
+    @keyframes glow {
+      from { text-shadow: 0 0 10px var(--primary), 0 0 20px transparent; }
+      to { text-shadow: 0 0 20px var(--primary), 0 0 40px var(--accent), 0 0 60px var(--primary); }
+    }
+    
+    nav {
+      background: rgba(21,101,192,0.9);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(66,165,245,0.3);
+    }
+    
+    nav a {
+      color: #fff;
+      padding: 16px 24px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    nav a::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    nav a:hover::before {
+      left: 100%;
+    }
+    
+    nav a:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 0 20px var(--primary);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .disclaimer {
+      font-size: 1.1em;
+      color: var(--warning);
+      text-align: center;
+      margin: 40px auto;
+      max-width: 900px;
+      padding: 20px;
+      background: rgba(183,28,28,0.2);
+      border: 1px solid rgba(255,205,210,0.4);
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(255,82,82,0.6);
+      backdrop-filter: blur(5px);
+      animation: pulse 2s infinite alternate;
+    }
+    
+    section {
+      padding: 80px 40px;
+      margin: 60px auto;
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.7);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      backdrop-filter: blur(10px);
+      animation: fadeIn 1.5s ease;
+      border: 1px solid rgba(66,165,245,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-dark), var(--primary));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s ease;
+    }
+    
+    section:hover::before {
+      transform: scaleX(1);
+    }
+    
+    section:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 16px 60px rgba(66,165,245,0.8);
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    section h2 {
+      color: var(--accent);
+      margin-bottom: 25px;
+      font-size: 2.2em;
+      text-shadow: 0 0 15px rgba(130,177,255,0.8);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    hr {
+      border: none;
+      height: 2px;
+      background: linear-gradient(to right, var(--primary), var(--primary-dark));
+      margin: 30px 0;
+      border-radius: 2px;
+      box-shadow: 0 0 15px var(--primary);
+    }
+    
+    ul { 
+      margin: 20px 0 20px 35px;
+      list-style-type: none;
+    }
+    
+    li { 
+      margin: 12px 0;
+      position: relative;
+      padding-left: 30px;
+    }
+    
+    li::before {
+      content: "🪐";
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 1.2em;
+    }
+    
+    .power-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8em;
+      margin-left: 10px;
+      vertical-align: middle;
+      animation: pulse 2s infinite;
+    }
+    
+    .tracking-info {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      font-family: monospace;
+      font-size: 0.9em;
+      overflow-x: auto;
+    }
+    
+    .tracking-info h3 {
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    footer {
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), 
+                  url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center;
+      background-size: cover;
+      background-attachment: fixed;
+      color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+      font-size: 1.1em;
+      box-shadow: 0 -4px 30px rgba(0,0,0,0.6);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    footer::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.9) 100%);
+    }
+    
+    footer p { 
+      position: relative; 
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+      header {
+        padding: 100px 20px;
+      }
+      
+      header h1 {
+        font-size: 2.5em;
+      }
+      
+      header p {
+        font-size: 1.2em;
+      }
+      
+      nav a {
+        padding: 12px 15px;
+        font-size: 0.9em;
+      }
+      
+      section {
+        padding: 50px 25px;
+        margin: 40px 20px;
+      }
+      
+      section h2 {
+        font-size: 1.8em;
+      }
+      
+      .planet {
+        width: 150px;
+        height: 150px;
+        right: 5%;
+        top: 10%;
+      }
+      
+      .satellite {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Cosmic background elements -->
+  <div class="cosmic-bg" id="cosmicBg"></div>
+  
+  <header>
+    <div class="planet"></div>
+    <div class="satellite"></div>
+    <h1>🌌 Y: The Next Human Civilization</h1>
+    <p>A Visionary Blueprint by @mnmyounus (Age 16)</p>
+  </header>
+
+  <nav>
+    <a href="#ylegal">⚖️ YLegal</a>
+    <a href="#iwc">🏛️ IWC</a>
+    <a href="#yinternational">🌍 YInternational</a>
+    <a href="#ydigital">💻 YDigital</a>
+    <a href="#yproject">🎓 YProject</a>
+    <a href="#ybusiness">🏦 YBusiness</a>
+    <a href="#ynation">🚀 YNation</a>
+    <a href="#manifesto">🌟 Manifesto</a>
+<a href="download">Download Hub</a>
+    <a href="Contact">Contact Us</a>
+  </nav>
+
+  <div class="container">
+    <div class="disclaimer">
+      ⚠️ Disclaimer: The information presented reflects a personal vision and imaginative projection of future goals. Its realization may evolve or differ over time. This content is conceptual and inspirational only.
+    </div>
+
+    <section id="ylegal">
+      <h2>⚖️ YLegal – International & National Justice System</h2>
+      <p>YLegal is a universal justice system for both individuals and governments. It addresses issues including bribes, corruption, scams, crimes, traffic, drugs, wrongdoing, harassment, abuse, trafficking, property disputes, and more.</p>
+      <ul>
+        <li>Case Submissions: Both individuals and governments can submit.</li>
+        <li>Direct Complaints: Even cases against Presidents can be filed.</li>
+        <li>Anonymous Complaints: Full privacy guaranteed.</li>
+        <li>Minor Rights: Even children and youth can raise cases.</li>
+        <li>Universal Scope: Covers everything in society and the universe.</li>
+      </ul>
+      <hr>
+    </section>
+
+    <section id="iwc">
+      <h2>🏛️ International World Court (IWC) <span class="power-badge">Supreme Authority</span></h2>
+      <p>The International World Court (IWC) is the highest judicial authority in the Y civilization, with powers exceeding all existing international courts. All nations, organizations, and individuals must obey its rulings without exception.</p>
+      <ul>
+        <li><strong>Supreme Jurisdiction:</strong> Authority over all international disputes, including those between nations</li>
+        <li><strong>Binding Decisions:</strong> All rulings are final and immediately enforceable worldwide</li>
+        <li><strong>Universal Compliance:</strong> Every country must adhere to IWC judgments, regardless of previous agreements</li>
+        <li><strong>Global Enforcement:</strong> YPeacekeepers ensure implementation of all court decisions</li>
+        <li><strong>Cases Against Leaders:</strong> Heads of state can be tried for crimes against humanity</li>
+        <li><strong>Fast-Track Justice:</strong> Emergency rulings within 72 hours for critical matters</li>
+        <li><strong>Transparent Proceedings:</strong> All trials are publicly accessible with full documentation</li>
+        <li><strong>Visitor Tracking:</strong> All visits to this section are recorded for security purposes</li>
+      </ul>
+      
+      <div class="tracking-info">
+        <h3>📡 Your Visit Information <small>(Simulated tracking for demonstration)</small></h3>
+        <pre id="visitData">Loading your visit information...</pre>
+      </div>
+      
+      <hr>
+    </section>
+
+    <section id="yinternational">
+      <h2>🌍 YInternational World</h2>
+      <p>YInternational World is the global extension of YLegal.</p>
+      <ul>
+        <li>Integration: All international bodies will work within YInternational World.</li>
+        <li>Transparency: Ensures accountability of all UN, EU, and global sub-organizations.</li>
+        <li>Scope: Handles everything at the international level, including war, peace, Interpol cases, and global disputes.</li>
+      </ul>
+      <hr>
+    </section>
+
+    <section id="ydigital">
+      <h2>💻 YDigital – Secure Digital Ecosystem</h2>
+      <p>YDigital is the most advanced, secure, and privacy-focused digital system.</p>
+      <ul>
+        <li>Core Platforms: YEmail, YChat, YMovie/YTV, YBrowser, YDisk, YTools, YAI, YVPN</li>
+        <li>Business Expansion: Buy and rebuild Google (Yoogle), Meta (Yeta), Amazon (Yamazon), Apple (Yapple), plus Elon Musk products.</li>
+        <li>Additional: YWallet/YMoney, YOS, YDomain, YProton, YSuperSystem</li>
+      </ul>
+      <hr>
+    </section>
+
+    <section id="yproject">
+      <h2>🎓 YProject – Freebies & Humanitarian Programs</h2>
+      <ul>
+        <li>Free Online Courses covering all subjects</li>
+        <li>YGames (ethical gaming)</li>
+        <li>YTools Online (free universal tools)</li>
+        <li>YGiveaway (programs & surveys)</li>
+        <li>YCharity (for poor, orphans, and community aid)</li>
+        <li>YMosque (worship and community support)</li>
+        <li>YInternet Safe (protection for teens & adults)</li>
+        <li>YEducation (free online & offline learning)</li>
+        <li>YPrograms (empowerment initiatives)</li>
+      </ul>
+      <hr>
+    </section>
+
+    <section id="ybusiness">
+      <h2>🏦 YBusiness – Global Economy & Infrastructure</h2>
+      <ul>
+        <li>YBank: Smartest bank in the universe</li>
+        <li>YShopping: Secure online commerce</li>
+        <li>YDigital: Tech and software systems</li>
+        <li>YMall: All products in the universe</li>
+        <li>YAirport: Smart airports and travel hubs</li>
+        <li>YPdr: Pickup, drop, ride services</li>
+        <li>YSchool/YUniversity: Education systems worldwide</li>
+        <li>YInternet: Satellite + fiber global internet</li>
+        <li>YPrograms: Incubators & projects</li>
+        <li>YProducts & YServices: Universal availability</li>
+      </ul>
+      <hr>
+    </section>
+
+    <section id="ynation">
+      <h2>🚀 YNation / YUniverse – A Sovereign Digital Nation</h2>
+      <p>YUniverse is a borderless, sovereign digital nation with universal institutions.</p>
+      <ul>
+        <li>Institutions: YCourt, YHumanRights, YChildRights, YLegal, YPolice, YHealth, YReligion, YSpace</li>
+        <li>Global Integration: Works with UN, EU, Interpol, IMF, World Bank, ICC, AU, ASEAN, OIC, GCC, MERCOSUR</li>
+        <li>Future Expansion: YPlace on Mars for space governance</li>
+      </ul>
+      <hr>
+    </section>
+
+    <section id="manifesto">
+      <h2>🌟 All-in-One Manifesto</h2>
+      <p>At only 16 years old, @mnmyounus envisions a future where Y is not just a corporation but the next human civilization.</p>
+      <ul>
+        <li>YLegal: Universal justice for individuals, governments, and minors</li>
+        <li>IWC: Supreme International World Court with authority over all nations</li>
+        <li>YInternational World: Uniting UN, EU, Interpol, and global bodies</li>
+        <li>YDigital: Buying Google, Meta, Amazon, Apple, and more, transforming them into YSuperSystem</li>
+        <li>YProject: Free education, safe internet, games, tools, and charity</li>
+        <li>YBusiness: Global infrastructure—banking, airports, schools, internet, malls</li>
+        <li>YNation / YUniverse: A sovereign digital nation, expanding beyond Earth to Mars</li>
+      </ul>
+      <p><em>Y = the next stage of human evolution—an ethical, intelligent, borderless digital civilization.</em></p>
+    </section>
+  </div>
+<div class="container">
+    <div class="disclaimer">
+      ⚠️ Disclaimer: The information presented reflects a personal vision and imaginative projection of future goals. Its realization may evolve or differ over time. This content is conceptual and inspirational only.
+    </div>
+
+  <footer>
+    <p>� 2023 Y Civilization Project. All rights reserved. | A Visionary Blueprint by @mnmyounus</p>
+  </footer>
+
+  <script>
+    // Create cosmic background with stars, nebulae, and comets
+    document.addEventListener('DOMContentLoaded', function() {
+      const cosmicBg = document.getElementById('cosmicBg');
+      
+      // Create stars
+      for (let i = 0; i < 200; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        
+        const size = Math.random() * 3;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        
+        star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        
+        cosmicBg.appendChild(star);
+      }
+      
+      // Create nebulae
+      for (let i = 0; i < 6; i++) {
+        const nebula = document.createElement('div');
+        nebula.classList.add('nebula');
+        
+        const size = Math.random() * 500 + 200;
+        nebula.style.width = `${size}px`;
+        nebula.style.height = `${size}px`;
+        
+        nebula.style.left = `${Math.random() * 80}%`;
+        nebula.style.top = `${Math.random() * 80}%`;
+        
+        const hue = Math.random() * 360;
+        nebula.style.backgroundColor = `hsla(${hue}, 70%, 50%, 0.1)`;
+        
+        nebula.style.animationDuration = `${Math.random() * 20 + 20}s`;
+        
+        cosmicBg.appendChild(nebula);
+      }
+      
+      // Create comets
+      for (let i = 0; i < 3; i++) {
+        const comet = document.createElement('div');
+        comet.classList.add('comet');
+        
+        comet.style.top = `${Math.random() * 100}%`;
+        comet.style.left = `${Math.random() * 100}%`;
+        
+        comet.style.animationDelay = `${Math.random() * 15}s`;
+        
+        cosmicBg.appendChild(comet);
+      }
+      
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('nav a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        });
+      });
+      
+      // Simulate visitor tracking for IWC section
+      simulateVisitorTracking();
+    });
+    
+    // Function to simulate visitor tracking (front-end only simulation)
+    function simulateVisitorTracking() {
+      try {
+        // Get visitor information (simulated)
+        const userAgent = navigator.userAgent;
+        const language = navigator.language;
+        const screenResolution = `${window.screen.width}x${window.screen.height}`;
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const timestamp = new Date().toISOString();
+        
+        // Simulate IP address (in a real scenario, this would come from a server-side request)
+        const simulatedIp = `192.168.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+        
+        // Create visit data object
+        const visitData = {
+          ip: simulatedIp,
+          userAgent: userAgent,
+          language: language,
+          screenResolution: screenResolution,
+          timezone: timezone,
+          timestamp: timestamp,
+          page: "IWC Section",
+          status: "Tracked"
+        };
+        
+        // Display the information on the page
+        const visitDataElement = document.getElementById('visitData');
+        if (visitDataElement) {
+          visitDataElement.textContent = JSON.stringify(visitData, null, 2);
+        }
+        
+        // Simulate storing in JSON file (in a real scenario, this would be sent to a server)
+        console.log('Visit tracked:', visitData);
+        
+        // Store in local storage to simulate persistence
+        const visits = JSON.parse(localStorage.getItem('iwc_visits') || '[]');
+        visits.push(visitData);
+        localStorage.setItem('iwc_visits', JSON.stringify(visits));
+        
+      } catch (error) {
+        console.error('Error simulating visitor tracking:', error);
+        const visitDataElement = document.getElementById('visitData');
+        if (visitDataElement) {
+          visitDataElement.textContent = 'Error tracking visit information.';
+        }
+      }
+    }
+  </script>
+</body>
+</html>

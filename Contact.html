@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Y: The Next Human Civilization</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&display=swap');
+    
+    :root {
+      --primary: #42A5F5;
+      --primary-dark: #0D47A1;
+      --accent: #82b1ff;
+      --text: #f0f0f0;
+      --bg-dark: #0b0d17;
+      --bg-darker: #000;
+      --warning: #ff8a80;
+      --success: #69f0ae;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Exo 2', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.7;
+      color: var(--text);
+      background: radial-gradient(ellipse at bottom, var(--bg-dark) 0%, var(--bg-darker) 100%);
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+    
+    /* Cosmic background elements */
+    .cosmic-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .star {
+      position: absolute;
+      background-color: white;
+      border-radius: 50%;
+      animation: twinkle linear infinite;
+    }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+    
+    .nebula {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.15;
+      animation: pulse 30s infinite alternate;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 0.1; transform: scale(1); }
+      100% { opacity: 0.2; transform: scale(1.2); }
+    }
+    
+    header {
+      background: linear-gradient(135deg, rgba(13,71,161,0.8), rgba(66,165,245,0.8)), 
+                  url('https://images.unsplash.com/photo-1465101162946-4377e57745c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2078&q=80');
+      color: #fff;
+      padding: 120px 20px;
+      text-align: center;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.7) 100%);
+      z-index: 1;
+    }
+    
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 1;
+    }
+    
+    header h1, header p {
+      position: relative;
+      z-index: 2;
+    }
+    
+    header h1 {
+      font-size: 3.5em;
+      margin-bottom: 15px;
+      text-shadow: 0 0 25px var(--primary);
+      animation: glow 3s infinite alternate;
+      letter-spacing: 2px;
+    }
+    
+    header p {
+      font-size: 1.4em;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    @keyframes glow {
+      from { text-shadow: 0 0 10px var(--primary), 0 0 20px transparent; }
+      to { text-shadow: 0 0 20px var(--primary), 0 0 40px var(--accent), 0 0 60px var(--primary); }
+    }
+    
+    nav {
+      background: rgba(21,101,192,0.9);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(66,165,245,0.3);
+    }
+    
+    nav a {
+      color: #fff;
+      padding: 16px 24px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    nav a::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    nav a:hover::before {
+      left: 100%;
+    }
+    
+    nav a:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 0 20px var(--primary);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin: 40px 0;
+    }
+    
+    .contact-info {
+      background: rgba(255,255,255,0.05);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(66,165,245,0.1);
+    }
+    
+    .contact-info h2 {
+      color: var(--accent);
+      margin-bottom: 25px;
+      font-size: 1.8em;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    
+    .info-item .icon {
+      font-size: 1.5em;
+      margin-right: 15px;
+      color: var(--accent);
+      min-width: 30px;
+      text-align: center;
+    }
+    
+    .info-content h3 {
+      margin-bottom: 5px;
+      font-size: 1.2em;
+    }
+    
+    .info-content p {
+      color: #ccc;
+      line-height: 1.6;
+    }
+    
+    .contact-form {
+      background: rgba(255,255,255,0.05);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(66,165,245,0.1);
+    }
+    
+    .contact-form h2 {
+      color: var(--accent);
+      margin-bottom: 25px;
+      font-size: 1.8em;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1em;
+      transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(66,165,245,0.3);
+    }
+    
+    textarea.form-control {
+      min-height: 150px;
+      resize: vertical;
+    }
+    
+    .btn {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    
+    .social-link {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      font-size: 1.5em;
+      transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+      background: var(--primary);
+      transform: translateY(-5px);
+    }
+    
+    .disclaimer {
+      font-size: 1em;
+      color: var(--warning);
+      text-align: center;
+      margin: 40px auto;
+      max-width: 900px;
+      padding: 20px;
+      background: rgba(183,28,28,0.2);
+      border: 1px solid rgba(255,205,210,0.4);
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(255,82,82,0.6);
+      backdrop-filter: blur(5px);
+    }
+    
+    footer {
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), 
+                  url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center;
+      background-size: cover;
+      background-attachment: fixed;
+      color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+      font-size: 1.1em;
+      box-shadow: 0 -4px 30px rgba(0,0,0,0.6);
+      position: relative;
+      overflow: hidden;
+      margin-top: 60px;
+    }
+    
+    footer::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.9) 100%);
+    }
+    
+    footer p { 
+      position: relative; 
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+      header {
+        padding: 100px 20px;
+      }
+      
+      header h1 {
+        font-size: 2.5em;
+      }
+      
+      header p {
+        font-size: 1.2em;
+      }
+      
+      nav a {
+        padding: 12px 15px;
+        font-size: 0.9em;
+      }
+      
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Cosmic background elements -->
+  <div class="cosmic-bg" id="cosmicBg"></div>
+  
+  <header>
+    <h1>📧 Contact Y Universe</h1>
+    <p>Get in touch with the visionaries behind the next human civilization</p>
+  </header>
+
+  <nav>
+    <a href="index.html">🏠 Home</a>
+    <a href="#contact-info">📞 Contact Info</a>
+    <a href="#contact-form">✉️ Send Message</a>
+    <a href="index.html#manifesto">🌟 Our Manifesto</a>
+<a href="download">?? Download Hub</a>
+  </nav>
+
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info" id="contact-info">
+        <h2>📞 Contact Information</h2>
+        
+        <div class="info-item">
+          <div class="icon">📧</div>
+          <div class="info-content">
+            <h3>Email</h3>
+            <p>y.place@proton.me<br>yyyyy</p>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="icon">🌐</div>
+          <div class="info-content">
+            <h3>Website</h3>
+            <p>https://y-universe-place.github.io<br>https://yuniverse.page.gd</p>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="icon">💬</div>
+          <div class="info-content">
+            <h3>Social Media</h3>
+            <p>Follow us for updates and announcements about the Y Civilization project</p>
+          </div>
+        </div>
+        
+        <div class="social-links">
+          <a href="#" class="social-link">📱</a>
+          <a href="#" class="social-link">💻</a>
+          <a href="#" class="social-link">🔗</a>
+          <a href="#" class="social-link">📹</a>
+        </div>
+      </div>
+      
+      <div class="contact-form" id="contact-form">
+        <h2>✉️ Send us a Message</h2>
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" class="form-control" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" class="form-control" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" class="form-control" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="message">Your Message</label>
+            <textarea id="message" class="form-control" required></textarea>
+          </div>
+          
+          <button type="submit" class="btn">🚀 Send Message</button>
+        </form>
+      </div>
+    </div>
+    
+    <div class="disclaimer">
+      ⚠️ Disclaimer: The information presented reflects a personal vision and imaginative projection of future goals. Its realization may evolve or differ over time. This content is conceptual and inspirational only.
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2023 Y Civilization Project. All rights reserved. | A Visionary Blueprint by @mnmyounus</p>
+  </footer>
+
+  <script>
+    // Create cosmic background with stars and nebulae
+    document.addEventListener('DOMContentLoaded', function() {
+      const cosmicBg = document.getElementById('cosmicBg');
+      
+      // Create stars
+      for (let i = 0; i < 150; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        
+        const size = Math.random() * 3;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        
+        star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        
+        cosmicBg.appendChild(star);
+      }
+      
+      // Create nebulae
+      for (let i = 0; i < 5; i++) {
+        const nebula = document.createElement('div');
+        nebula.classList.add('nebula');
+        
+        const size = Math.random() * 500 + 200;
+        nebula.style.width = `${size}px`;
+        nebula.style.height = `${size}px`;
+        
+        nebula.style.left = `${Math.random() * 80}%`;
+        nebula.style.top = `${Math.random() * 80}%`;
+        
+        const hue = Math.random() * 360;
+        nebula.style.backgroundColor = `hsla(${hue}, 70%, 50%, 0.1)`;
+        
+        nebula.style.animationDuration = `${Math.random() * 20 + 20}s`;
+        
+        cosmicBg.appendChild(nebula);
+      }
+      
+      // Form submission handling
+      const contactForm = document.getElementById('contactForm');
+      if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // In a real implementation, you would send the form data to a server
+          // For this example, we'll just show an alert
+          alert('Thank you for your message! In a real implementation, this would be sent to our servers.');
+          contactForm.reset();
+        });
+      }
+    });
+  </script>
+</body>
+</html>
